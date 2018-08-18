@@ -16,18 +16,14 @@ namespace Quran
     {
         OleDbConnection cnn;
         OleDbCommand cmd;
-        //OleDbDataReader dr;
         OleDbDataAdapter da;
         DataTable dt;
-        OleDbDataReader dr;
         DataTable dt_SuraInfo;
-        int n;
         int i = 0;
         int k;
         bool isPlaying = false;
         int curAyaIndex = 0;
 
-        string strOldAyahId;
         string strSelAyahId;
 
         string quranBgColor;
@@ -67,7 +63,6 @@ namespace Quran
 
             checkedListBox1.SetItemChecked(0, true);
             checkedListBox1.SetItemChecked(1, true);
-            //checkedListBox1.GetItemChecked(0);
 
             try
             {
@@ -76,22 +71,6 @@ namespace Quran
             catch {
                 comboBoxSura.SelectedIndex = 0;
             }
-        }
-        void txtAyahMouseWheel(object sen, MouseEventArgs e)
-        {
-            // Update the drawing based upon the mouse wheel scrolling.
-            //if (panel0.VerticalScroll.Value >= panel0.VerticalScroll.Minimum && panel0.VerticalScroll.Value <= panel0.VerticalScroll.Maximum)
-            //{
-
-            //    int numberOfTextLinesToMove = e.Delta * SystemInformation.MouseWheelScrollLines / 120;
-            //    int numberOfPixelsToMove = numberOfTextLinesToMove * 18; //18 is font size
-
-
-            //        if (panel0.VerticalScroll.Value - numberOfPixelsToMove > panel0.VerticalScroll.Minimum) panel0.VerticalScroll.Value -= numberOfPixelsToMove;
-            //        else panel0.VerticalScroll.Value = panel0.VerticalScroll.Minimum;
-
-
-            //}
         }
 
         private void Load_Document()
@@ -318,15 +297,8 @@ Relevation Order: " + strRelOrder + @" </span></td></tr>
 
             webBrowser1.DocumentText = richTextBox1.Text;
 
-            //n = dt.Rows.Count;
-
-
-
 
         }
-
-
-
 
 
         private void comboBoxAya_SelectedIndexChanged(object sender, EventArgs e)
@@ -403,23 +375,6 @@ Relevation Order: " + strRelOrder + @" </span></td></tr>
 
         }
 
-
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBoxPage_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnNextSura_Click(object sender, EventArgs e)
         {
             if (comboBoxSura.SelectedIndex < comboBoxSura.Items.Count - 1) comboBoxSura.SelectedIndex += 1;
@@ -441,11 +396,6 @@ Relevation Order: " + strRelOrder + @" </span></td></tr>
         private void btnPrevAya_Click(object sender, EventArgs e)
         {
             if (comboBoxAya.SelectedIndex > 0) comboBoxAya.SelectedIndex -= 1;
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
 
         }
 
@@ -480,8 +430,6 @@ Relevation Order: " + strRelOrder + @" </span></td></tr>
 
             setSelectedAyah(comboBoxAya.Text.GetHashCode());
 
-            //webBrowser1.Document.Body.Style = "background-color:"+quranBgColor;
-            //webBrowser1.Document.
         }
 
         private void groupBox1_Resize(object sender, EventArgs e)
@@ -496,15 +444,6 @@ Relevation Order: " + strRelOrder + @" </span></td></tr>
 
         }
 
-        private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-        }
-
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void checkedListBox1_SelectedValueChanged(object sender, EventArgs e)
         {
             if (strLanguages != checkedListBox1.GetItemChecked(0).ToString() + "_" + checkedListBox1.GetItemChecked(1).ToString() + "_" + checkedListBox1.GetItemChecked(2).ToString())
@@ -516,21 +455,10 @@ Relevation Order: " + strRelOrder + @" </span></td></tr>
 
         }
 
-        private void checkedListBox1_Validated(object sender, EventArgs e)
-        {
-
-        }
-
-
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             axWMP.settings.volume = trackBar1.Value;
-
-        }
-
-        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
-        {
 
         }
 
@@ -567,13 +495,6 @@ Relevation Order: " + strRelOrder + @" </span></td></tr>
             axWMP.Ctlcontrols.stop();
 
         }
-
-        private void axWMP_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-
 
         private void timerLoadDocument_Tick(object sender, EventArgs e)
         {
@@ -685,7 +606,6 @@ Search Result<br/>
             string strEnDiv;
 
             string strTrAya;
-            string ArAyaNo;
 
             for (i = 0; i < dt.Rows.Count; i++)
             {
@@ -749,17 +669,6 @@ Search Result<br/>
             abbox.Show();
 
         }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-
-
-
-
-
 
     }
 }

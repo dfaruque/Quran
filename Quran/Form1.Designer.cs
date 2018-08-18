@@ -152,7 +152,6 @@
             this.splitContainer1.Panel1.Controls.Add(this.groupBox2);
             this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(10, 5, 5, 10);
-            this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
             this.splitContainer1.Panel1MinSize = 200;
             // 
             // splitContainer1.Panel2
@@ -405,7 +404,6 @@
             this.groupBox1.TabIndex = 21;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Select";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             this.groupBox1.Resize += new System.EventHandler(this.groupBox1_Resize);
             // 
             // checkedListBox1
@@ -423,10 +421,7 @@
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(151, 47);
             this.checkedListBox1.TabIndex = 8;
-            this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
-            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
             this.checkedListBox1.SelectedValueChanged += new System.EventHandler(this.checkedListBox1_SelectedValueChanged);
-            this.checkedListBox1.Validated += new System.EventHandler(this.checkedListBox1_Validated);
             // 
             // label1
             // 
@@ -595,7 +590,6 @@
             this.label3.Size = new System.Drawing.Size(32, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Sura:";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // webBrowser1
             // 
@@ -622,7 +616,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(1280, 29);
             this.menuStrip1.TabIndex = 20;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // fileToolStripMenuItem
             // 
@@ -673,7 +666,6 @@
             this.axWMP.TabIndex = 21;
             this.axWMP.Visible = false;
             this.axWMP.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.axWindowsMediaPlayer1_PlayStateChange);
-            this.axWMP.Enter += new System.EventHandler(this.axWMP_Enter);
             // 
             // Form1
             // 
