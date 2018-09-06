@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 using Microsoft.Win32;
 
 using System.Data.OleDb;
+using Quran.Data;
 
 namespace Quran
 {
     public partial class Form1 : Form
     {
-        OleDbConnection cnn;
-        OleDbCommand cmd;
-        OleDbDataAdapter da;
+        QuranDB quranDB;
         DataTable dt;
         DataTable dt_SuraInfo;
         int i = 0;
@@ -39,17 +34,8 @@ namespace Quran
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            cnn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0; Data Source ="
-                + Application.StartupPath + "\\quran.accdb");
-
-            comboBoxReciter.SelectedIndex = 0;
-            cnn.Open();
-            cmd = new OleDbCommand("select * from SuraInfo order by Number;", cnn);
-            da = new OleDbDataAdapter(cmd);
-            dt_SuraInfo = new DataTable();
-            da.Fill(dt_SuraInfo);
-            cnn.Close();
+            quranDB = new QuranDB(Application.StartupPath + "\\quran.accdb");
+            dt_SuraInfo = quranDB.GetSuraInfo();
 
             for (int i = 0; i <= dt_SuraInfo.Rows.Count - 1; i++)
             {
@@ -132,11 +118,7 @@ namespace Quran
         }
         private void CreateDocument(int intSuraNo)
         {
-            cnn.Open();
-            da = new OleDbDataAdapter("select * from Quran where suraID=" + (intSuraNo) + " ORDER BY ID;", cnn);
-            dt = new DataTable();
-            da.Fill(dt);
-            cnn.Close();
+            dt = quranDB.GetSuraById(intSuraNo);
 
             string strAppURL = "file:///" + Application.StartupPath;
             strAppURL = strAppURL.Replace(@"\", "/");
@@ -510,23 +492,7 @@ Relevation Order: " + strRelOrder + @" </span></td></tr>
             if (comboBoxSearchIn.SelectedIndex == 1)
                 searchin = "AND SuraID=" + (comboBoxSura.SelectedIndex + 1).ToString();
 
-            cnn.Open();
-            da = new OleDbDataAdapter("SELECT * FROM quran WHERE (AyahText LIKE '%" + textBoxSearch.Text + "%' " + searchin + " ) ORDER BY ID;", cnn);
-            dt = new DataTable();
-            da.Fill(dt);
-
-
-            if (dt.Rows.Count == 0)
-            {
-                da = new OleDbDataAdapter("SELECT * FROM quran WHERE (English LIKE '%" + textBoxSearch.Text + "%' " + searchin + " ) ORDER BY ID;", cnn);
-                da.Fill(dt);
-            }
-            if (dt.Rows.Count == 0)
-            {
-                da = new OleDbDataAdapter("SELECT * FROM quran WHERE (easy_bn_trans LIKE '%" + textBoxSearch.Text + "%' " + searchin + " ) ORDER BY ID;", cnn);
-                da.Fill(dt);
-            }
-            cnn.Close();
+            dt = quranDB.Search(textBoxSearch.Text, searchin);
 
             string strAppURL = "file:///" + Application.StartupPath;
             strAppURL = strAppURL.Replace(@"\", "/");
