@@ -4,7 +4,6 @@ using System.Windows.Forms;
 
 using Microsoft.Win32;
 
-using System.Data.OleDb;
 using Quran.Data;
 
 namespace Quran
