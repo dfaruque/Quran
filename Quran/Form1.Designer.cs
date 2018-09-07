@@ -51,13 +51,14 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnPlay = new System.Windows.Forms.Button();
+            this.axWMP = new AxWMPLib.AxWindowsMediaPlayer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnPrevPage = new System.Windows.Forms.Button();
             this.btnNextPage = new System.Windows.Forms.Button();
-            this.comboBoxPage = new System.Windows.Forms.ComboBox();
+            this.comboBoxRuku = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnPrevAya = new System.Windows.Forms.Button();
@@ -74,7 +75,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timerLoadDocument = new System.Windows.Forms.Timer(this.components);
-            this.axWMP = new AxWMPLib.AxWindowsMediaPlayer();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -82,11 +83,11 @@
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axWMP)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axWMP)).BeginInit();
             this.SuspendLayout();
             // 
             // timerPlayback
@@ -140,7 +141,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 29);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
             this.splitContainer1.Margin = new System.Windows.Forms.Padding(0);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -160,7 +161,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.richTextBox1);
             this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.splitContainer1.Panel2MinSize = 100;
-            this.splitContainer1.Size = new System.Drawing.Size(1280, 662);
+            this.splitContainer1.Size = new System.Drawing.Size(1280, 667);
             this.splitContainer1.SplitterDistance = 200;
             this.splitContainer1.SplitterWidth = 3;
             this.splitContainer1.TabIndex = 19;
@@ -295,7 +296,7 @@
             this.groupBox2.Controls.Add(this.axWMP);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox2.Location = new System.Drawing.Point(10, 526);
+            this.groupBox2.Location = new System.Drawing.Point(10, 531);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
@@ -384,6 +385,18 @@
             this.btnPlay.UseVisualStyleBackColor = true;
             this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
+            // axWMP
+            // 
+            this.axWMP.Enabled = true;
+            this.axWMP.Location = new System.Drawing.Point(8, 94);
+            this.axWMP.Margin = new System.Windows.Forms.Padding(2);
+            this.axWMP.Name = "axWMP";
+            this.axWMP.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWMP.OcxState")));
+            this.axWMP.Size = new System.Drawing.Size(165, 32);
+            this.axWMP.TabIndex = 21;
+            this.axWMP.Visible = false;
+            this.axWMP.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.axWindowsMediaPlayer1_PlayStateChange);
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.checkedListBox1);
@@ -438,7 +451,7 @@
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.Controls.Add(this.btnPrevPage);
             this.panel2.Controls.Add(this.btnNextPage);
-            this.panel2.Controls.Add(this.comboBoxPage);
+            this.panel2.Controls.Add(this.comboBoxRuku);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Location = new System.Drawing.Point(92, 58);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
@@ -473,18 +486,18 @@
             this.btnNextPage.Text = "►";
             this.btnNextPage.UseVisualStyleBackColor = false;
             // 
-            // comboBoxPage
+            // comboBoxRuku
             // 
-            this.comboBoxPage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.comboBoxRuku.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(233)))), ((int)(((byte)(211)))));
-            this.comboBoxPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBoxPage.ForeColor = System.Drawing.Color.Black;
-            this.comboBoxPage.FormattingEnabled = true;
-            this.comboBoxPage.Location = new System.Drawing.Point(18, 18);
-            this.comboBoxPage.Name = "comboBoxPage";
-            this.comboBoxPage.Size = new System.Drawing.Size(46, 21);
-            this.comboBoxPage.TabIndex = 6;
+            this.comboBoxRuku.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(233)))), ((int)(((byte)(211)))));
+            this.comboBoxRuku.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxRuku.ForeColor = System.Drawing.Color.Black;
+            this.comboBoxRuku.FormattingEnabled = true;
+            this.comboBoxRuku.Location = new System.Drawing.Point(18, 18);
+            this.comboBoxRuku.Name = "comboBoxRuku";
+            this.comboBoxRuku.Size = new System.Drawing.Size(46, 21);
+            this.comboBoxRuku.TabIndex = 6;
             // 
             // label5
             // 
@@ -492,9 +505,9 @@
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(233)))), ((int)(((byte)(211)))));
             this.label5.Location = new System.Drawing.Point(17, 1);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.Size = new System.Drawing.Size(36, 13);
             this.label5.TabIndex = 5;
-            this.label5.Text = "Page:";
+            this.label5.Text = "Ruku:";
             // 
             // panel1
             // 
@@ -598,7 +611,7 @@
             this.webBrowser1.Margin = new System.Windows.Forms.Padding(10);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(1072, 662);
+            this.webBrowser1.Size = new System.Drawing.Size(1072, 667);
             this.webBrowser1.TabIndex = 14;
             this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser1_DocumentCompleted);
             // 
@@ -613,26 +626,26 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1280, 29);
+            this.menuStrip1.Size = new System.Drawing.Size(1280, 24);
             this.menuStrip1.TabIndex = 20;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 25);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(56, 25);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
             // 
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(59, 25);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // helpToolStripMenuItem
@@ -640,13 +653,13 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(131, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -654,18 +667,6 @@
             // 
             this.timerLoadDocument.Interval = 10;
             this.timerLoadDocument.Tick += new System.EventHandler(this.timerLoadDocument_Tick);
-            // 
-            // axWMP
-            // 
-            this.axWMP.Enabled = true;
-            this.axWMP.Location = new System.Drawing.Point(8, 94);
-            this.axWMP.Margin = new System.Windows.Forms.Padding(2);
-            this.axWMP.Name = "axWMP";
-            this.axWMP.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWMP.OcxState")));
-            this.axWMP.Size = new System.Drawing.Size(165, 32);
-            this.axWMP.TabIndex = 21;
-            this.axWMP.Visible = false;
-            this.axWMP.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.axWindowsMediaPlayer1_PlayStateChange);
             // 
             // Form1
             // 
@@ -686,6 +687,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -694,6 +696,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axWMP)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -702,7 +705,6 @@
             this.panel1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axWMP)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -736,7 +738,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnPrevPage;
         private System.Windows.Forms.Button btnNextPage;
-        private System.Windows.Forms.ComboBox comboBoxPage;
+        private System.Windows.Forms.ComboBox comboBoxRuku;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ComboBox comboBoxColor;

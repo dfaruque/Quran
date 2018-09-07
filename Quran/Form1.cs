@@ -82,6 +82,12 @@ namespace Quran
             for (k = 1; k <= dt_SuraInfo.Rows[comboBoxSura.SelectedIndex]["AyaCount"].GetHashCode(); k++)
                 comboBoxAya.Items.Add(k);
 
+            comboBoxRuku.Items.Clear();
+
+            for (k = 1; k <= dt_SuraInfo.Rows[comboBoxSura.SelectedIndex]["RukuCount"].GetHashCode(); k++)
+                comboBoxRuku.Items.Add(k);
+
+
         }
         string ConverToArDigit(int EnDigit)
         {
@@ -89,16 +95,6 @@ namespace Quran
             string temp;
 
             temp = EnDigit.ToString();
-            //temp = temp.Replace('0', '۰');
-            //temp = temp.Replace('1', '۱');
-            //temp = temp.Replace('2', '۲');
-            //temp = temp.Replace('3', '۳');
-            //temp = temp.Replace('4', '۴');
-            //temp = temp.Replace('5', '۵');
-            //temp = temp.Replace('6', '۶');
-            //temp = temp.Replace('7', '۷');
-            //temp = temp.Replace('8', '۸');
-            //temp = temp.Replace('9', '۹');
 
             //٠١٢٣٤٥٦٧٨٩
             temp = temp.Replace('0', '٠');
