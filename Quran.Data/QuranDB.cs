@@ -50,12 +50,12 @@ namespace Quran.Data
             var dt = new DataTable();
             da.Fill(dt);
 
-
             if (dt.Rows.Count == 0)
             {
                 da = new OleDbDataAdapter("SELECT * FROM quran WHERE (English LIKE '%" + searchTerm + "%' " + searchIn + " ) ORDER BY ID;", cnn);
                 da.Fill(dt);
             }
+
             if (dt.Rows.Count == 0)
             {
                 da = new OleDbDataAdapter("SELECT * FROM quran WHERE (easy_bn_trans LIKE '%" + searchTerm + "%' " + searchIn + " ) ORDER BY ID;", cnn);
