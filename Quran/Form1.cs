@@ -14,9 +14,6 @@ namespace Quran
         QuranMetadata QuranMeta = new QuranMetadata();
         QuranData QuranData = new QuranData();
 
-        //QuranDB quranDB;
-        //DataTable dt;
-        //DataTable dt_SuraInfo;
         int i = 0;
         int k;
         bool isPlaying = false;
