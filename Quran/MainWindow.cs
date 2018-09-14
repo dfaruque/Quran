@@ -9,9 +9,8 @@ using Quran.Data;
 
 namespace Quran
 {
-    public partial class Form1 : Form
+    public partial class MainWindow : Form
     {
-        QuranMetadata QuranMeta = new QuranMetadata();
         QuranData QuranData = new QuranData();
 
         int i = 0;
@@ -27,7 +26,7 @@ namespace Quran
 
         string strLanguages = "True_True_False";
 
-        public Form1()
+        public MainWindow()
         {
             InitializeComponent();
         }
@@ -35,9 +34,9 @@ namespace Quran
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            for (int i = 0; i <= QuranMeta.Sura.Length - 1; i++)
+            for (int i = 0; i <= QuranData.Metadata.Sura.Length - 1; i++)
             {
-                comboBoxSura.Items.Add((i + 1) + ". " + QuranMeta.Sura[i].TName);
+                comboBoxSura.Items.Add((i + 1) + ". " + QuranData.Metadata.Sura[i].TName);
             }
 
             quranBgColor = "#D3E9D3";
@@ -79,12 +78,12 @@ namespace Quran
 
             comboBoxAya.Items.Clear();
 
-            for (k = 1; k <= QuranMeta.Sura[comboBoxSura.SelectedIndex].Ayas; k++)
+            for (k = 1; k <= QuranData.Metadata.Sura[comboBoxSura.SelectedIndex].Ayas; k++)
                 comboBoxAya.Items.Add(k);
 
             comboBoxRuku.Items.Clear();
 
-            for (k = 1; k <= QuranMeta.Sura[comboBoxSura.SelectedIndex].Rukus; k++)
+            for (k = 1; k <= QuranData.Metadata.Sura[comboBoxSura.SelectedIndex].Rukus; k++)
                 comboBoxRuku.Items.Add(k);
 
 
@@ -116,20 +115,20 @@ namespace Quran
             string strAppURL = "file:///" + Application.StartupPath;
             strAppURL = strAppURL.Replace(@"\", "/");
 
-            var selectedSura = QuranMeta.Sura[intSuraNo - 1];
+            var selectedSura = QuranData.Metadata.Sura[intSuraNo - 1];
 
-            string strArSuraName = checkedListBox1.GetItemChecked(0) ?
+            string SuraName_Arabic = checkedListBox1.GetItemChecked(0) ?
                 selectedSura.Name : "";
 
-            string strBnSuraName = checkedListBox1.GetItemChecked(1) ?
+            string SuraName_Bangla = checkedListBox1.GetItemChecked(1) ?
                 selectedSura.TName + " | " : "";
 
-            string strEnSuraName = checkedListBox1.GetItemChecked(2) ?
+            string SuraName_English = checkedListBox1.GetItemChecked(2) ?
                 selectedSura.EName + " | " : "";
 
-            string strDescent = selectedSura.Type;
-            int strAyaCount = selectedSura.Ayas;
-            int strRelOrder = selectedSura.Order;
+            string SuraType = selectedSura.Type;
+            int AyaCount = selectedSura.Ayas;
+            int RevelationOrder = selectedSura.Order;
 
             var sb = new StringBuilder();
 
@@ -196,12 +195,12 @@ background-color:" + quranBorderColor + @";
 text-align:center;
 padding-bottom:10px; height:49;'>
 <span style='font-family:bangla; font-size:35px;'>"
-                   + (intSuraNo).ToString() + ". " + strBnSuraName + strEnSuraName + @"</span>
-<span style='font-family:me_quran;  font-size:35px;'>" + strArSuraName + @"</span><br />
+                   + (intSuraNo).ToString() + ". " + SuraName_Bangla + SuraName_English + @"</span>
+<span style='font-family:me_quran;  font-size:35px;'>" + SuraName_Arabic + @"</span><br />
 <span style='font-family:bangla; color:" + quranBgColor + @"; font-size:20px;'>
-Descent: " + strDescent + @", 
-Ayah Count: " + strAyaCount + @", 
-Relevation Order: " + strRelOrder + @" </span></td></tr>
+Descent: " + SuraType + @", 
+Ayah Count: " + AyaCount + @", 
+Relevation Order: " + RevelationOrder + @" </span></td></tr>
 
 
 ");

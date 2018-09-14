@@ -1,6 +1,6 @@
 ﻿namespace Quran
 {
-    partial class Form1
+    partial class MainWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.timerPlayback = new System.Windows.Forms.Timer(this.components);
             this.comboBoxAya = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();

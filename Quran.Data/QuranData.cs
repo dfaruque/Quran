@@ -12,6 +12,8 @@ namespace Quran.Data
 {
     public class QuranData
     {
+        public QuranMetadata Metadata = new QuranMetadata();
+
         public readonly Dictionary<string, string[]> _Texts = new Dictionary<string, string[]>();
 
         private readonly string assemblyFolder;
