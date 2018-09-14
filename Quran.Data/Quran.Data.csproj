@@ -45,5 +45,13 @@
     <Compile Include="QuranMetadata.cs" />
     <Compile Include="QuranModels.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="QuranAudios\" />
+    <Folder Include="QuranTranslations\" />
+    <Folder Include="QuranTransliterations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="QuranTexts\quran-simple-enhanced.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
