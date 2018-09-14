@@ -41,17 +41,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuranData.cs" />
     <Compile Include="QuranDB.cs" />
     <Compile Include="QuranMetadata.cs" />
     <Compile Include="QuranModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="QuranAudios\" />
-    <Folder Include="QuranTransliterations\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="QuranTexts\quran-simple-enhanced.txt" />
-    <Content Include="QuranTranslations\bn.bengali.txt" />
+    <Content Include="QuranTexts\quran-simple-enhanced.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="QuranTexts\bn.bengali.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Text;
 using System.Windows.Forms;
 
 using Microsoft.Win32;
@@ -10,9 +11,12 @@ namespace Quran
 {
     public partial class Form1 : Form
     {
-        QuranDB quranDB;
-        DataTable dt;
-        DataTable dt_SuraInfo;
+        QuranMetadata QuranMeta = new QuranMetadata();
+        QuranData QuranData = new QuranData();
+
+        //QuranDB quranDB;
+        //DataTable dt;
+        //DataTable dt_SuraInfo;
         int i = 0;
         int k;
         bool isPlaying = false;
@@ -33,12 +37,10 @@ namespace Quran
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            quranDB = new QuranDB(Application.StartupPath + "\\quran.accdb");
-            dt_SuraInfo = quranDB.GetSuraInfo();
 
-            for (int i = 0; i <= dt_SuraInfo.Rows.Count - 1; i++)
+            for (int i = 0; i <= QuranMeta.Sura.Length - 1; i++)
             {
-                comboBoxSura.Items.Add((i + 1) + ". " + dt_SuraInfo.Rows[i]["tName_en"]);
+                comboBoxSura.Items.Add((i + 1) + ". " + QuranMeta.Sura[i].TName);
             }
 
             quranBgColor = "#D3E9D3";
@@ -53,7 +55,8 @@ namespace Quran
             {
                 comboBoxSura.SelectedIndex = Registry.GetValue(@"HKEY_CURRENT_USER\Software\DFA Tech\Quran", "CurrentSura", 0).GetHashCode();
             }
-            catch {
+            catch
+            {
                 comboBoxSura.SelectedIndex = 0;
             }
         }
@@ -79,12 +82,12 @@ namespace Quran
 
             comboBoxAya.Items.Clear();
 
-            for (k = 1; k <= dt_SuraInfo.Rows[comboBoxSura.SelectedIndex]["AyaCount"].GetHashCode(); k++)
+            for (k = 1; k <= QuranMeta.Sura[comboBoxSura.SelectedIndex].Ayas; k++)
                 comboBoxAya.Items.Add(k);
 
             comboBoxRuku.Items.Clear();
 
-            for (k = 1; k <= dt_SuraInfo.Rows[comboBoxSura.SelectedIndex]["RukuCount"].GetHashCode(); k++)
+            for (k = 1; k <= QuranMeta.Sura[comboBoxSura.SelectedIndex].Rukus; k++)
                 comboBoxRuku.Items.Add(k);
 
 
@@ -113,28 +116,27 @@ namespace Quran
         }
         private void CreateDocument(int intSuraNo)
         {
-            dt = quranDB.GetSuraById(intSuraNo);
-
             string strAppURL = "file:///" + Application.StartupPath;
             strAppURL = strAppURL.Replace(@"\", "/");
 
+            var selectedSura = QuranMeta.Sura[intSuraNo - 1];
+
             string strArSuraName = checkedListBox1.GetItemChecked(0) ?
-                dt_SuraInfo.Rows[intSuraNo - 1]["SuraName"].ToString()
-                : "";
+                selectedSura.Name : "";
+
             string strBnSuraName = checkedListBox1.GetItemChecked(1) ?
-                dt_SuraInfo.Rows[intSuraNo - 1]["tName_bn"].ToString() + " | "
-                : "";
+                selectedSura.TName + " | " : "";
+
             string strEnSuraName = checkedListBox1.GetItemChecked(2) ?
-                dt_SuraInfo.Rows[intSuraNo - 1]["tName_en"].ToString() + " | "
-                : "";
+                selectedSura.EName + " | " : "";
 
-            string strDescent = dt_SuraInfo.Rows[intSuraNo - 1]["Descent"].ToString();
-            string strAyaCount = dt_SuraInfo.Rows[intSuraNo - 1]["AyaCount"].ToString();
-            string strRelOrder = dt_SuraInfo.Rows[intSuraNo - 1]["RelevantionOrder"].ToString();
+            string strDescent = selectedSura.Type;
+            int strAyaCount = selectedSura.Ayas;
+            int strRelOrder = selectedSura.Order;
 
+            var sb = new StringBuilder();
 
-            richTextBox1.Clear();
-            richTextBox1.AppendText(@"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
+            sb.AppendLine(@"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
 <html xmlns=""http://www.w3.org/1999/xhtml"" >
 <head>
     <title>Untitled Page</title>
@@ -218,61 +220,64 @@ Relevation Order: " + strRelOrder + @" </span></td></tr>
 
             if (intSuraNo - 1 != 0 && intSuraNo - 1 != 8) //for not sura 1 and 9
                 if (checkedListBox1.GetItemChecked(0))
-                    richTextBox1.AppendText(@"<tr><td class='tdAyah'>"
+                    sb.AppendLine(@"<tr><td class='tdAyah'>"
                         + strArDiv + strBnDiv + strEnDiv + @"</td>
 <td id='tdAyahNo0_0' class='tdAyahNo'></td></tr>");
                 else
-                    richTextBox1.AppendText(@"<tr><td id='tdAyahNo0_0' class='tdAyahNo'></td>
+                    sb.AppendLine(@"<tr><td id='tdAyahNo0_0' class='tdAyahNo'></td>
 <td class='tdAyah'>" + strArDiv + strBnDiv + @"</td></tr>");
 
 
             string strTrAya;
             string ArAyaNo;
+            string[] quranArabicTexts = QuranData.GetTexts("quran-simple-enhanced");
+            string[] quranBanglaTexts = QuranData.GetTexts("bn.bengali");
 
-            for (i = 0; i < dt.Rows.Count; i++)
+            for (i = 0; i < selectedSura.Ayas; i++)
             {
+
                 strArDiv = checkedListBox1.GetItemChecked(0) ?
-                    "<div class='divArabic'>" + dt.Rows[i]["AyahText"].ToString()
+                    "<div class='divArabic'>" + quranArabicTexts[selectedSura.Start + i]
                     + @" <span style='font-size:20px'>۝</span></div>" //adding ۝ sign at every arabic ayah
                     : "";
                 strBnDiv = checkedListBox1.GetItemChecked(1) ?
-                    "<div class='divTrans'>" + dt.Rows[i]["easy_bn_trans"].ToString() + @"</div>"
+                    "<div class='divTrans'>" + quranBanglaTexts[selectedSura.Start + i] + @"</div>"
                     : "";
                 strEnDiv = checkedListBox1.GetItemChecked(2) ?
-                    "<div class='divTrans'>" + dt.Rows[i]["English"].ToString() + @"</div>"
+                    "<div class='divTrans'>" + quranBanglaTexts[selectedSura.Start + i] + @"</div>"
                     : "";
 
                 if (checkedListBox1.GetItemChecked(0))
                 {
-                    ArAyaNo = ConverToArDigit(dt.Rows[i]["verseID"].GetHashCode());
+                    ArAyaNo = ConverToArDigit(i + 1);
 
                     strTrAya = @"<tr><td class='tdAyah'>" + strArDiv + strBnDiv + strEnDiv + @"</td>
 <td title='"
-                        + dt_SuraInfo.Rows[intSuraNo - 1]["tName_en"].ToString() + "-"
-                        + dt.Rows[i]["verseID"].ToString()
-                        + "' id='tdAyahNo" + dt.Rows[i]["suraID"].ToString() + "_" + dt.Rows[i]["verseID"].ToString()
+                        + selectedSura.EName + "-"
+                        + (i + 1)
+                        + "' id='tdAyahNo" + intSuraNo + "_" + (i + 1)
                         + "' class='tdAyahNo'>﴿"
                         + ArAyaNo + @"﴾</td>                    
 ";
                 }
                 else
                     strTrAya = @"<tr><td title='"
-                        + dt_SuraInfo.Rows[intSuraNo - 1]["tName_en"].ToString() + "-"
-                        + (intSuraNo - 1).ToString()
-                        + "' id='tdAyahNo" + dt.Rows[i]["suraID"].ToString() + "_" + dt.Rows[i]["verseID"].ToString()
+                        + selectedSura.EName + "-"
+                        + (intSuraNo - 1)
+                        + "' id='tdAyahNo" + intSuraNo + "_" + (i + 1)
                         + "' class='tdAyahNo'>&nbsp"
-                        + dt.Rows[i]["verseID"].ToString() + @"&nbsp</td>
+                        + i + 1 + @"&nbsp</td>
                     <td class='tdAyah'>" + strArDiv + strBnDiv + strEnDiv + @"</td></tr>
 ";
 
-                richTextBox1.AppendText(strTrAya);
+                sb.AppendLine(strTrAya);
 
             }
 
-            richTextBox1.AppendText(@"
+            sb.AppendLine(@"
 </table></body></html>");
 
-            webBrowser1.DocumentText = richTextBox1.Text;
+            webBrowser1.DocumentText = sb.ToString();
 
 
         }
@@ -482,132 +487,132 @@ Relevation Order: " + strRelOrder + @" </span></td></tr>
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            //SELECT * FROM quran WHERE (AyahText LIKE '%الْحَمْدُ %')
-            string searchin = "";
-            if (comboBoxSearchIn.SelectedIndex == 1)
-                searchin = "AND SuraID=" + (comboBoxSura.SelectedIndex + 1).ToString();
+            //            //SELECT * FROM quran WHERE (AyahText LIKE '%الْحَمْدُ %')
+            //            string searchin = "";
+            //            if (comboBoxSearchIn.SelectedIndex == 1)
+            //                searchin = "AND SuraID=" + (comboBoxSura.SelectedIndex + 1).ToString();
 
-            dt = quranDB.Search(textBoxSearch.Text, searchin);
+            //            dt = quranDB.Search(textBoxSearch.Text, searchin);
 
-            string strAppURL = "file:///" + Application.StartupPath;
-            strAppURL = strAppURL.Replace(@"\", "/");
-
-
-            richTextBox1.Clear();
-            richTextBox1.AppendText(@"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
-<html xmlns=""http://www.w3.org/1999/xhtml"" >
-<head>
-    <title>Untitled Page</title>
-    <style type=""text/css"">
-        .tdAyah
-        {
-            border:solid 2px " + quranBorderColor + @";
-            padding:5px 10px 5px 10px;
-
-        }
-        .divArabic
-        {
-        	direction:rtl;
-            text-align:justify;
-            font-size:30px;
-            font-family:me_quran;
-        }
-        .divTrans
-        {
-            text-align:justify;
-            font-family:bangla;
-        }
-        .tdAyahNo
-        {
-        	direction:rtl;
-            color:" + quranBgColor + @";
-            background-color:" + quranBorderColor + @";
-            text-align:center;
-            font-family:me_quran;
-            width:60px;
+            //            string strAppURL = "file:///" + Application.StartupPath;
+            //            strAppURL = strAppURL.Replace(@"\", "/");
 
 
-        }
-    </style>
+            //            richTextBox1.Clear();
+            //            richTextBox1.AppendText(@"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
+            //<html xmlns=""http://www.w3.org/1999/xhtml"" >
+            //<head>
+            //    <title>Untitled Page</title>
+            //    <style type=""text/css"">
+            //        .tdAyah
+            //        {
+            //            border:solid 2px " + quranBorderColor + @";
+            //            padding:5px 10px 5px 10px;
 
-    <script type=""text/javascript"">
-    function goWaitState(){
-    divWait.style.display=""block"";
-    }
-
-    </script>
-</head>
-<body style='background-color:" + quranBgColor + @"; margin:10px'>
-<div id='divWait' 
-style='position:fixed; display:none; color:White; font-size:35px; text-align:center;'>
-Please Wait...</div>
-
-<table width='100%'
-style='background-position: center; 
-margin: 0px; font-size:25px; 
-border:solid 5px " + quranBorderColor + @"; 
-border-collapse:collapse; 
-background-image: url(""" + strAppURL + @"/zekr-bg.png""); 
-background-repeat: no-repeat; 
-background-attachment: fixed;'>
-
-<tr><td colspan='2'
-style='color:white;
-background-color:" + quranBorderColor + @";
-text-align:center;
-padding-bottom:10px; height:49;'>
-Search Result<br/>
-" + dt.Rows.Count + @" Ayats contains """ + textBoxSearch.Text + @"""
-</td></tr>
-
-
-");
-            string strArDiv;
-            string strBnDiv;
-            string strEnDiv;
-
-            string strTrAya;
-
-            for (i = 0; i < dt.Rows.Count; i++)
-            {
-                strArDiv = checkedListBox1.GetItemChecked(0) ?
-                    "<div class='divArabic'>" + dt.Rows[i]["AyahText"].ToString()
-                    + @" <span style='font-size:20px'>۝</span></div>" //adding ۝ sign at every arabic ayah
-                    : "";
-                strArDiv = strArDiv.Replace(textBoxSearch.Text, "<b style='color:" + quranBgColor + "; background-color:" + quranBorderColor + "'>" + textBoxSearch.Text + "</b>");
-
-                strBnDiv = checkedListBox1.GetItemChecked(1) ?
-                    "<div class='divTrans'>" + dt.Rows[i]["easy_bn_trans"].ToString() + @"</div>"
-                    : "";
-                strBnDiv = strBnDiv.Replace(textBoxSearch.Text, "<b style='color:" + quranBgColor + "; background-color:" + quranBorderColor + "'>" + textBoxSearch.Text + "</b>");
-
-                strEnDiv = checkedListBox1.GetItemChecked(2) ?
-                    "<div class='divTrans'>" + dt.Rows[i]["English"].ToString() + @"</div>"
-                    : "";
-                strEnDiv = strEnDiv.Replace(textBoxSearch.Text, "<b style='color:" + quranBgColor + "; background-color:" + quranBorderColor + "'>" + textBoxSearch.Text + "</b>");
+            //        }
+            //        .divArabic
+            //        {
+            //        	direction:rtl;
+            //            text-align:justify;
+            //            font-size:30px;
+            //            font-family:me_quran;
+            //        }
+            //        .divTrans
+            //        {
+            //            text-align:justify;
+            //            font-family:bangla;
+            //        }
+            //        .tdAyahNo
+            //        {
+            //        	direction:rtl;
+            //            color:" + quranBgColor + @";
+            //            background-color:" + quranBorderColor + @";
+            //            text-align:center;
+            //            font-family:me_quran;
+            //            width:60px;
 
 
-                //ArAyaNo = dt.Rows[i]["suraID"].GetHashCode() + ":" + dt.Rows[i]["verseID"].GetHashCode();
+            //        }
+            //    </style>
 
-                strTrAya = @"<tr><td class='tdAyah'>" + strArDiv + strBnDiv + strEnDiv + @"</td>
-<td title="
-                    + dt_SuraInfo.Rows[dt.Rows[i]["suraID"].GetHashCode() - 1]["tName_en"].ToString() + "-"
-                    + dt.Rows[i]["verseID"].ToString()
-                    + " id='tdAyahNo" + dt.Rows[i]["suraID"].ToString() + "_" + dt.Rows[i]["verseID"].ToString()
-                    + "' class='tdAyahNo'>"
-                    + dt.Rows[i]["suraID"].GetHashCode() + ":" + dt.Rows[i]["verseID"].GetHashCode() + @"</td>                    
-";
+            //    <script type=""text/javascript"">
+            //    function goWaitState(){
+            //    divWait.style.display=""block"";
+            //    }
+
+            //    </script>
+            //</head>
+            //<body style='background-color:" + quranBgColor + @"; margin:10px'>
+            //<div id='divWait' 
+            //style='position:fixed; display:none; color:White; font-size:35px; text-align:center;'>
+            //Please Wait...</div>
+
+            //<table width='100%'
+            //style='background-position: center; 
+            //margin: 0px; font-size:25px; 
+            //border:solid 5px " + quranBorderColor + @"; 
+            //border-collapse:collapse; 
+            //background-image: url(""" + strAppURL + @"/zekr-bg.png""); 
+            //background-repeat: no-repeat; 
+            //background-attachment: fixed;'>
+
+            //<tr><td colspan='2'
+            //style='color:white;
+            //background-color:" + quranBorderColor + @";
+            //text-align:center;
+            //padding-bottom:10px; height:49;'>
+            //Search Result<br/>
+            //" + dt.Rows.Count + @" Ayats contains """ + textBoxSearch.Text + @"""
+            //</td></tr>
+
+
+            //");
+            //            string strArDiv;
+            //            string strBnDiv;
+            //            string strEnDiv;
+
+            //            string strTrAya;
+
+            //            for (i = 0; i < dt.Rows.Count; i++)
+            //            {
+            //                strArDiv = checkedListBox1.GetItemChecked(0) ?
+            //                    "<div class='divArabic'>" + dt.Rows[i]["AyahText"].ToString()
+            //                    + @" <span style='font-size:20px'>۝</span></div>" //adding ۝ sign at every arabic ayah
+            //                    : "";
+            //                strArDiv = strArDiv.Replace(textBoxSearch.Text, "<b style='color:" + quranBgColor + "; background-color:" + quranBorderColor + "'>" + textBoxSearch.Text + "</b>");
+
+            //                strBnDiv = checkedListBox1.GetItemChecked(1) ?
+            //                    "<div class='divTrans'>" + dt.Rows[i]["easy_bn_trans"].ToString() + @"</div>"
+            //                    : "";
+            //                strBnDiv = strBnDiv.Replace(textBoxSearch.Text, "<b style='color:" + quranBgColor + "; background-color:" + quranBorderColor + "'>" + textBoxSearch.Text + "</b>");
+
+            //                strEnDiv = checkedListBox1.GetItemChecked(2) ?
+            //                    "<div class='divTrans'>" + dt.Rows[i]["English"].ToString() + @"</div>"
+            //                    : "";
+            //                strEnDiv = strEnDiv.Replace(textBoxSearch.Text, "<b style='color:" + quranBgColor + "; background-color:" + quranBorderColor + "'>" + textBoxSearch.Text + "</b>");
+
+
+            //                //ArAyaNo = dt.Rows[i]["suraID"].GetHashCode() + ":" + dt.Rows[i]["verseID"].GetHashCode();
+
+            //                strTrAya = @"<tr><td class='tdAyah'>" + strArDiv + strBnDiv + strEnDiv + @"</td>
+            //<td title="
+            //                    + dt_SuraInfo.Rows[dt.Rows[i]["suraID"].GetHashCode() - 1]["tName_en"].ToString() + "-"
+            //                    + dt.Rows[i]["verseID"].ToString()
+            //                    + " id='tdAyahNo" + dt.Rows[i]["suraID"].ToString() + "_" + dt.Rows[i]["verseID"].ToString()
+            //                    + "' class='tdAyahNo'>"
+            //                    + dt.Rows[i]["suraID"].GetHashCode() + ":" + dt.Rows[i]["verseID"].GetHashCode() + @"</td>                    
+            //";
 
 
 
-                richTextBox1.AppendText(strTrAya);
+            //                richTextBox1.AppendText(strTrAya);
 
-            }
+            //            }
 
-            richTextBox1.AppendText(@"
-</table></body></html>");
+            //            richTextBox1.AppendText(@"
+            //</table></body></html>");
 
-            webBrowser1.DocumentText = richTextBox1.Text;
+            //            webBrowser1.DocumentText = richTextBox1.Text;
 
         }
 
