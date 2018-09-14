@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Quran.Data
 {
+    [Obsolete]
     public class QuranDB
     {
         OleDbConnection cnn;
