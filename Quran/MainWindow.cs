@@ -226,21 +226,22 @@ Relevation Order: " + RevelationOrder + @" </span></td></tr>
 
             string strTrAya;
             string ArAyaNo;
-            string[] quranArabicTexts = QuranData.GetTexts("quran-simple-enhanced");
-            string[] quranBanglaTexts = QuranData.GetTexts("bn.bengali");
+            string[] quranArabicText = QuranData.GetTexts("quran-simple-enhanced");
+            string[] quranBanglaText = QuranData.GetTexts("bn.bengali");
+            string[] quranEnglishText = QuranData.GetTexts("en.sahih");
 
             for (i = 0; i < selectedSura.Ayas; i++)
             {
 
                 strArDiv = checkedListBox1.GetItemChecked(0) ?
-                    "<div class='divArabic'>" + quranArabicTexts[selectedSura.Start + i]
+                    "<div class='divArabic'>" + quranArabicText[selectedSura.Start + i]
                     + @" <span style='font-size:20px'>۝</span></div>" //adding ۝ sign at every arabic ayah
                     : "";
                 strBnDiv = checkedListBox1.GetItemChecked(1) ?
-                    "<div class='divTrans'>" + quranBanglaTexts[selectedSura.Start + i] + @"</div>"
+                    "<div class='divTrans'>" + quranBanglaText[selectedSura.Start + i] + @"</div>"
                     : "";
                 strEnDiv = checkedListBox1.GetItemChecked(2) ?
-                    "<div class='divTrans'>" + quranBanglaTexts[selectedSura.Start + i] + @"</div>"
+                    "<div class='divTrans'>" + quranEnglishText[selectedSura.Start + i] + @"</div>"
                     : "";
 
                 if (checkedListBox1.GetItemChecked(0))

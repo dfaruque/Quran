@@ -50,6 +50,9 @@
     <Folder Include="QuranAudios\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="QuranTexts\en.sahih.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="QuranTexts\quran-simple-enhanced.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
