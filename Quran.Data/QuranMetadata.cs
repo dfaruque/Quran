@@ -498,26 +498,48 @@ namespace Quran.Data
 
 
         //------------------ Sajda Data ---------------------
-        // {sura, aya, type}
-        //readonly Tuple<int, int, string> Sajda = new (int, int, string)[] { 
-        //    (7, 206, "recommended"),
-        //    (13, 15, "recommended"),
-        //    (16, 50, "recommended"),
-        //    (17, 109, "recommended"),
-        //    (19, 58, "recommended"),
-        //    (22, 18, "recommended"),
-        //    (22, 77, "recommended"),
-        //    (25, 60, "recommended"),
-        //    (27, 26, "recommended"),
-        //    (32, 15, "obligatory"),
-        //    (38, 24, "recommended"),
-        //    (41, 38, "obligatory"),
-        //    (53, 62, "obligatory"),
-        //    (84, 21, "recommended"),
-        //    (96, 19, "obligatory"),
-        //};
+        //     {sura, aya, type
+           readonly SajdaMetadata[] Sajda = new SajdaMetadata[] {
+           new SajdaMetadata(7, 206, SajdaType.Recommended),
+           new SajdaMetadata(13, 15, SajdaType.Recommended),
+           new SajdaMetadata(16, 50, SajdaType.Recommended),
+           new SajdaMetadata(17, 109, SajdaType.Recommended),
+           new SajdaMetadata(19, 58, SajdaType.Recommended),
+           new SajdaMetadata(22, 18, SajdaType.Recommended),
+           new SajdaMetadata(22, 77, SajdaType.Recommended),
+           new SajdaMetadata(25, 60, SajdaType.Recommended),
+           new SajdaMetadata(27, 26, SajdaType.Recommended),
+           new SajdaMetadata(32, 15, SajdaType.Obligatory),
+           new SajdaMetadata(38, 24, SajdaType.Recommended),
+           new SajdaMetadata(41, 38, SajdaType.Obligatory),
+           new SajdaMetadata(53, 62, SajdaType.Obligatory),
+           new SajdaMetadata(84, 21, SajdaType.Recommended),
+           new SajdaMetadata(96, 19, SajdaType.Obligatory),
+        };
 
 
 
     }
+
+    public class SajdaMetadata
+    {
+        public int Sura { get; set; }
+        public int Aya { get; set; }
+        public SajdaType Type { get; set; }
+
+        public SajdaMetadata(int sura, int aya, SajdaType type)
+        {
+            Sura = sura;
+            Aya = aya;
+            Type = type;
+        }
+    }
+
+    public enum SajdaType
+    {
+        Obligatory = 1,
+        Recommended = 2
+    }
+
+
 }
