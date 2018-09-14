@@ -110,6 +110,7 @@ namespace Quran
             return temp;
 
         }
+
         private void CreateDocument(int intSuraNo)
         {
             string strAppURL = "file:///" + Application.StartupPath;
@@ -243,6 +244,10 @@ Relevation Order: " + RevelationOrder + @" </span></td></tr>
                 strEnDiv = checkedListBox1.GetItemChecked(2) ?
                     "<div class='divTrans'>" + quranEnglishText[selectedSura.Start + i] + @"</div>"
                     : "";
+
+                if (QuranData.Metadata.IsRukuStart(intSuraNo, i + 1)){
+                    strArDiv = "<div class='divTrans'>Ruku " + QuranData.Metadata.GetRukuNumber(intSuraNo, i + 1) + @"</div>" + strArDiv;
+                }
 
                 if (checkedListBox1.GetItemChecked(0))
                 {

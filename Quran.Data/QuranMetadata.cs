@@ -46,7 +46,30 @@ namespace Quran.Data
 
     public class QuranMetadata
     {
+        public bool IsRukuStart(int sura, int aya)
+        {
+            
+            return GetRukuNumber(sura, aya) > 0;
+        }
 
+        public int GetRukuNumber(int sura, int aya)
+        {
+            for (int rukuIndex = 0; rukuIndex < Ruku.GetLength(0); rukuIndex++)
+            {
+                if (Ruku[rukuIndex, 0] == sura)
+                {
+                    if (Ruku[rukuIndex, 1] == aya)
+                    {
+                        return rukuIndex;
+                    }
+                }
+
+                if (Ruku[rukuIndex, 0] > sura) break;
+            }
+
+            return 0;
+
+        }
         //------------------ Sura Data ---------------------
         // [start, ayas, order, rukus, name, tname, ename, type]
         public readonly SuraMetadata[] Sura = new SuraMetadata[] {
