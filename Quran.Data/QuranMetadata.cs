@@ -170,7 +170,7 @@ namespace Quran.Data
 
         //------------------ Juz Data ---------------------
         // [sura, aya]
-        public readonly Dictionary<int, int> Juz = new Dictionary<int, int> {
+        public readonly int[,] Juz = new int[,] {
             {1, 1},     {2, 142},   {2, 253},   {3, 93},    {4, 24},
             {4, 148},   {5, 82},    {6, 111},   {7, 88},    {8, 41},
             {9, 93},    {11, 6},    {12, 53},   {15, 1},    {17, 1},
@@ -181,7 +181,7 @@ namespace Quran.Data
 
         //------------------ Hizb Data ---------------------
         // [sura, aya]
-        public readonly Dictionary<int, int> HizbQaurter = new Dictionary<int, int> {
+        public readonly int[,] HizbQaurter = new int[,] {
             {1, 1},     {2, 26},    {2, 44},    {2, 60},
             {2, 75},    {2, 92},    {2, 106},   {2, 124},
             {2, 142},   {2, 158},   {2, 177},   {2, 189},
@@ -247,13 +247,13 @@ namespace Quran.Data
 
 
         //------------------ Manzil Data ---------------------
-        public readonly Dictionary<int, int> Manzil = new Dictionary<int, int> {
+        public readonly int[,] Manzil = new int[,] {
             {1, 1},     {5, 1},     {10, 1},    {17, 1},
             {26, 1},    {37, 1},    {50, 1} };
 
 
         //------------------ Ruku Data ---------------------
-        public readonly Dictionary<int, int> Ruku = new Dictionary<int, int> {
+        public readonly int[,] Ruku = new int[,] {
     {1, 1},     {2, 1},     {2, 8},     {2, 21},    {2, 30},
     {2, 40},    {2, 47},    {2, 60},    {2, 62},    {2, 72},
     {2, 83},    {2, 87},    {2, 97},    {2, 104},   {2, 113},
@@ -371,7 +371,7 @@ namespace Quran.Data
 
         //------------------ Page Data ---------------------
         // {sura, aya}
-        public readonly Dictionary<int, int> Page = new Dictionary<int, int> {
+        public readonly int[,] Page = new int[,] {
             {1, 1},     {2, 1},     {2, 6},     {2, 17},    {2, 25},
             {2, 30},    {2, 38},    {2, 49},    {2, 58},    {2, 62},
             {2, 70},    {2, 77},    {2, 84},    {2, 89},    {2, 94},
@@ -499,7 +499,7 @@ namespace Quran.Data
 
         //------------------ Sajda Data ---------------------
         //     {sura, aya, type
-           readonly SajdaMetadata[] Sajda = new SajdaMetadata[] {
+        readonly SajdaMetadata[] Sajda = new SajdaMetadata[] {
            new SajdaMetadata(7, 206, SajdaType.Recommended),
            new SajdaMetadata(13, 15, SajdaType.Recommended),
            new SajdaMetadata(16, 50, SajdaType.Recommended),
