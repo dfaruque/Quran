@@ -47,11 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="QuranAudios\" />
-    <Folder Include="QuranTranslations\" />
     <Folder Include="QuranTransliterations\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="QuranTexts\quran-simple-enhanced.txt" />
+    <Content Include="QuranTranslations\bn.bengali.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
