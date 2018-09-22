@@ -141,7 +141,7 @@ namespace Quran
         .tdAyah
         {
             border:solid 2px " + quranBorderColor + @";
-            padding:5px 10px 5px 10px;
+            padding:10px 15px 10px 15px;
 
         }
         .divArabic
@@ -155,6 +155,13 @@ namespace Quran
         {
             text-align:justify;
             font-family:bangla;
+        }
+        .divRuku
+        {
+            text-align:center;
+            font-family:bangla;
+            padding: 20px;
+
         }
         .tdAyahNo
         {
@@ -246,7 +253,7 @@ Relevation Order: " + RevelationOrder + @" </span></td></tr>
                     : "";
 
                 if (QuranData.Metadata.IsRukuStart(intSuraNo, i + 1)){
-                    strArDiv = "<div class='divTrans'>Ruku " + QuranData.Metadata.GetRukuNumber(intSuraNo, i + 1) + @"</div>" + strArDiv;
+                    strArDiv = "<div class='divRuku'>Ruku " + QuranData.Metadata.GetRukuNumber(intSuraNo, i + 1) + @"</div>" + strArDiv;
                 }
 
                 if (checkedListBox1.GetItemChecked(0))
@@ -338,7 +345,7 @@ Relevation Order: " + RevelationOrder + @" </span></td></tr>
 
             //axWMP.URL = @"G:\Quran Recitation\afasy-64kbps-offline.recit\afasy-64kbps-offline\" + strSuraNo + "\\" + strSuraNo + strAyaNo + ".mp3";
             if (comboBoxReciter.Text == "Mishari Rashid Bin Alafasy")
-                axWMP.URL = Application.StartupPath + @"\Recitations\afasy-64kbps-offline.recit\afasy-64kbps-offline\" + strSuraNo + "\\" + strSuraNo + strAyaNo + ".mp3";
+                axWMP.URL = @"G:\Quran Recitation\afasy-64kbps-offline.recit\afasy-64kbps-offline\" + strSuraNo + "\\" + strSuraNo + strAyaNo + ".mp3";
             else if (comboBoxReciter.Text == "Abdul Basit")
                 axWMP.URL = Application.StartupPath + @"\Recitations\abdulbasit-mujawwad-64kbps-offline.recit\abdulbasit-mujawwad-64kbps-offline\" + strSuraNo + "\\" + strSuraNo + strAyaNo + ".mp3";
 
@@ -462,7 +469,7 @@ Relevation Order: " + RevelationOrder + @" </span></td></tr>
 
 
             if (comboBoxReciter.Text == "Mishari Rashid Bin Alafasy")
-                axWMP.URL = Application.StartupPath + @"\Recitations\afasy-64kbps-offline.recit\afasy-64kbps-offline\" + strSuraNo + "\\" + strSuraNo + strAyaNo + ".mp3";
+                axWMP.URL = @"G:\Quran Recitation\afasy-64kbps-offline.recit\afasy-64kbps-offline\" + strSuraNo + "\\" + strSuraNo + strAyaNo + ".mp3";
             else if (comboBoxReciter.Text == "Abdul Basit")
                 axWMP.URL = Application.StartupPath + @"\Recitations\abdulbasit-mujawwad-64kbps-offline.recit\abdulbasit-mujawwad-64kbps-offline\" + strSuraNo + "\\" + strSuraNo + strAyaNo + ".mp3";
 
