@@ -26,7 +26,7 @@ namespace Quran
                 selectedSura.EName + " | " : "";
 
             string SuraType = selectedSura.Type;
-            int AyaCount = selectedSura.Ayas;
+            int AyaCount = selectedSura.AyatCount;
             int RevelationOrder = selectedSura.Order;
 
             var sb = new StringBuilder();
@@ -136,18 +136,18 @@ Relevation Order: " + RevelationOrder + @" </span></td></tr>
             string[] quranBanglaText = QuranData.GetTexts("bn.bengali");
             string[] quranEnglishText = QuranData.GetTexts("en.sahih");
 
-            for (i = 0; i < selectedSura.Ayas; i++)
+            for (i = 0; i < selectedSura.AyatCount; i++)
             {
 
                 strArDiv = checkedListBox1.GetItemChecked(0) ?
-                    "<div class='divArabic'>" + quranArabicText[selectedSura.Start + i]
+                    "<div class='divArabic'>" + quranArabicText[selectedSura.StartIndex + i]
                     + @" <span style='font-size:20px'>۝</span></div>" //adding ۝ sign at every arabic ayah
                     : "";
                 strBnDiv = checkedListBox1.GetItemChecked(1) ?
-                    "<div class='divTrans'>" + quranBanglaText[selectedSura.Start + i] + @"</div>"
+                    "<div class='divTrans'>" + quranBanglaText[selectedSura.StartIndex + i] + @"</div>"
                     : "";
                 strEnDiv = checkedListBox1.GetItemChecked(2) ?
-                    "<div class='divTrans'>" + quranEnglishText[selectedSura.Start + i] + @"</div>"
+                    "<div class='divTrans'>" + quranEnglishText[selectedSura.StartIndex + i] + @"</div>"
                     : "";
 
                 if (QuranData.Metadata.IsRukuStart(intSuraNo, i + 1))

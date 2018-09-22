@@ -9,8 +9,9 @@ namespace Quran.Data
 {
     public class SuraMetadata
     {
-        public int Start { get; set; }
-        public int Ayas { get; set; }
+        public int StartIndex { get; set; }
+        public int AyatCount { get; set; }
+        public int EndIndex => StartIndex + AyatCount;
         public int Order { get; set; }
         public int Rukus { get; set; }
         public string Name { get; set; }
@@ -18,10 +19,12 @@ namespace Quran.Data
         public string EName { get; set; }
         public string Type { get; set; }
 
-        public SuraMetadata(int start, int ayas, int order, int rukus, string name, string tname, string ename, string type)
+        public int[] Ayats { get; set; }
+
+        public SuraMetadata(int start, int ayatCont, int order, int rukus, string name, string tname, string ename, string type)
         {
-            Start = start;
-            Ayas = ayas;
+            StartIndex = start;
+            AyatCount = ayatCont;
             Order = order;
             Rukus = rukus;
             Name = name;
@@ -29,6 +32,11 @@ namespace Quran.Data
             EName = ename;
             Type = type;
 
+            Ayats = new int[ayatCont];
+            for (int i = 0; i < ayatCont; i++)
+            {
+                Ayats[i] = start + i;
+            }
         }
     }
 
@@ -48,7 +56,7 @@ namespace Quran.Data
     {
         public bool IsRukuStart(int sura, int aya)
         {
-            
+
             return GetRukuNumber(sura, aya) > 0;
         }
 

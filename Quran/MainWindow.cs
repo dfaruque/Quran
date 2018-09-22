@@ -78,7 +78,7 @@ namespace Quran
 
             comboBoxAya.Items.Clear();
 
-            for (k = 1; k <= QuranData.Metadata.Sura[comboBoxSura.SelectedIndex].Ayas; k++)
+            for (k = 1; k <= QuranData.Metadata.Sura[comboBoxSura.SelectedIndex].AyatCount; k++)
                 comboBoxAya.Items.Add(k);
 
             comboBoxRuku.Items.Clear();
