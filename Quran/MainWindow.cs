@@ -274,25 +274,7 @@ namespace Quran
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            //axWMP.URL = @"F:\Quran\Quran Soft\Zekr\res\audio\afasy-64kbps-offline\050\050001.mp3";
-            int intSuraNo = comboBoxSura.SelectedIndex + 1;
-            string strSuraNo = intSuraNo < 10 ?
-                        strSuraNo = "00" + intSuraNo.ToString() : intSuraNo < 100 ?
-                            strSuraNo = "0" + intSuraNo.ToString() : strSuraNo = intSuraNo.ToString();
-
-            if (comboBoxAya.SelectedIndex < 0) comboBoxAya.SelectedIndex = 0;
-            int intAyaNo = comboBoxAya.SelectedIndex + 1;
-            string strAyaNo = intAyaNo < 10 ?
-                        strAyaNo = "00" + intAyaNo.ToString() : intAyaNo < 100 ?
-                            strAyaNo = "0" + intAyaNo.ToString() : strAyaNo = intAyaNo.ToString();
-
-
-            if (comboBoxReciter.Text == "Mishari Rashid Bin Alafasy")
-                axWMP.URL = @"G:\Quran Recitation\afasy-64kbps-offline.recit\afasy-64kbps-offline\" + strSuraNo + "\\" + strSuraNo + strAyaNo + ".mp3";
-            else if (comboBoxReciter.Text == "Abdul Basit")
-                axWMP.URL = Application.StartupPath + @"\Recitations\abdulbasit-mujawwad-64kbps-offline.recit\abdulbasit-mujawwad-64kbps-offline\" + strSuraNo + "\\" + strSuraNo + strAyaNo + ".mp3";
-
-            axWMP.Ctlcontrols.play();
+            timerPlayback.Enabled = true;
 
             isPlaying = true;
 
