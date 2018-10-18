@@ -143,7 +143,7 @@ namespace Quran
         }
 
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void timerPlayback_Tick(object sender, EventArgs e)
         {
             timerPlayback.Enabled = false;
 

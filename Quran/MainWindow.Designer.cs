@@ -92,7 +92,7 @@
             // timerPlayback
             // 
             this.timerPlayback.Interval = 1;
-            this.timerPlayback.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timerPlayback.Tick += new System.EventHandler(this.timerPlayback_Tick);
             // 
             // comboBoxAya
             // 
@@ -656,7 +656,7 @@
             this.timerLoadDocument.Interval = 10;
             this.timerLoadDocument.Tick += new System.EventHandler(this.timerLoadDocument_Tick);
             // 
-            // Form1
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -667,7 +667,7 @@
             this.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quran - The message, sent by Allah (swt.)";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
